@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import java.util.*;
 
 import it.polito.tdp.dizionario.Model.Model;
+import it.polito.tdp.dizionario.db.DizionarioDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 
 public class DizionarioController {
 	
+	private DizionarioDAO dao = new DizionarioDAO();
 	private Model model;
 	String testo="";
 
@@ -50,7 +52,8 @@ public class DizionarioController {
     @FXML
     void doGeneraGrafo(ActionEvent event) {
     	int n = Integer.parseInt(txtNumLettere.getText()) ;
-    	model.creaGrafo(n); 	
+    	//model.creaGrafo(n); 	
+    	dao.GenerateGraph(n);
     }
 
     @FXML
@@ -68,8 +71,8 @@ public class DizionarioController {
     void doTrovaConnessi(ActionEvent event) {
     	Set<String> vertici = new HashSet<String>();
     	String parola = txtParolaDaCercare.getText();
-    	vertici.addAll(model.verticiConnessi(parola));
-
+    	//vertici.addAll(model.verticiConnessi(parola));
+    	vertici.addAll(dao.verticiConnessi(parola));
     	testo += "\nTutti i nodi connessi sono: "+vertici.toString();
     	txtArea.setText(testo);
     	
@@ -80,8 +83,8 @@ public class DizionarioController {
 
     	Set<String> vertici = new HashSet<String>();
     	String parola = txtParolaDaCercare.getText();
-    	vertici.addAll(model.verticiVicini(parola));
-
+    	//vertici.addAll(model.verticiVicini(parola));
+    	vertici.addAll(dao.verticiVicini(parola));
     	testo += "\nTutti i nodi vicini sono: "+vertici.toString();
     	txtArea.setText(testo);
     }
