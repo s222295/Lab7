@@ -25,6 +25,9 @@ public class DizionarioController {
     private URL location;
 
     @FXML
+    private Button btnTrovaCammino;
+    
+    @FXML
     private TextField txtNumLettere;
 
     @FXML
@@ -41,6 +44,9 @@ public class DizionarioController {
 
     @FXML
     private TextArea txtArea;
+    
+    @FXML
+    private TextField txtParolaArrivo;
 
     @FXML
     private Button btnReset;
@@ -62,6 +68,7 @@ public class DizionarioController {
     	txtArea.clear();
     	txtParolaDaCercare.clear();
     	txtNumLettere.clear();
+    	txtParolaArrivo.clear();
     	testo="";
     }
 
@@ -88,16 +95,39 @@ public class DizionarioController {
     	testo += "\nTutti i nodi vicini sono: "+vertici.toString();
     	txtArea.setText(testo);
     }
+    
+    @FXML
+    void doTrovaCammino(ActionEvent event) {
+
+    	String s1 = txtParolaDaCercare.getText();
+    	String s2 = txtParolaArrivo.getText();
+    	int n = Integer.parseInt(txtNumLettere.getText()) ;
+    	
+    	if(s1.length()!= n ||  s2.length()!=n){
+    		txtArea.setText("Lunghezza errata\n");
+    		return;
+    	}
+    	//List<String> cammino = model.getCammino(s1,s2);
+    	List<String> cammino = dao.getCammino(s1,s2);
+    	txtArea.appendText("***"+s1+" - "+s2+"** ("+cammino.size()+" passi)\n");
+    	
+    	for(String g: cammino){
+    		txtArea.appendText("\t"+g+"\n"); 
+    	}
+    	
+    }
 
     @FXML
     void initialize() {
-        assert txtNumLettere != null : "fx:id=\"txtNumLettere\" was not injected: check your FXML file 'Dizionario.fxml'.";
-        assert txtParolaDaCercare != null : "fx:id=\"txtParolaDaCercare\" was not injected: check your FXML file 'Dizionario.fxml'.";
-        assert btnGeneraGrafo != null : "fx:id=\"btnGeneraGrafo\" was not injected: check your FXML file 'Dizionario.fxml'.";
-        assert btnTrovaVicini != null : "fx:id=\"btnTrovaVicini\" was not injected: check your FXML file 'Dizionario.fxml'.";
-        assert btnTrovaConnessi != null : "fx:id=\"btnTrovaConnessi\" was not injected: check your FXML file 'Dizionario.fxml'.";
-        assert txtArea != null : "fx:id=\"txtArea\" was not injected: check your FXML file 'Dizionario.fxml'.";
-        assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Dizionario.fxml'.";
+    	   assert txtNumLettere != null : "fx:id=\"txtNumLettere\" was not injected: check your FXML file 'Dizionario.fxml'.";
+           assert txtParolaDaCercare != null : "fx:id=\"txtParolaDaCercare\" was not injected: check your FXML file 'Dizionario.fxml'.";
+           assert txtParolaArrivo != null : "fx:id=\"txtParolaArrivo\" was not injected: check your FXML file 'Dizionario.fxml'.";
+           assert btnGeneraGrafo != null : "fx:id=\"btnGeneraGrafo\" was not injected: check your FXML file 'Dizionario.fxml'.";
+           assert btnTrovaVicini != null : "fx:id=\"btnTrovaVicini\" was not injected: check your FXML file 'Dizionario.fxml'.";
+           assert btnTrovaConnessi != null : "fx:id=\"btnTrovaConnessi\" was not injected: check your FXML file 'Dizionario.fxml'.";
+           assert btnTrovaCammino != null : "fx:id=\"btnTrovaCammino\" was not injected: check your FXML file 'Dizionario.fxml'.";
+           assert txtArea != null : "fx:id=\"txtArea\" was not injected: check your FXML file 'Dizionario.fxml'.";
+           assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Dizionario.fxml'.";
 
     }
 
